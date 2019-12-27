@@ -55,9 +55,6 @@ const vlazyload = {
  inserted(el,binding) {
     addListener(el,binding)
   },
-  update: function (el,binding) {
-    addListener(el,binding)
-  }
 };
 
 export default vlazyload;
