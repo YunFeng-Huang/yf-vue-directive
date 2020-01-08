@@ -7,8 +7,8 @@ function getTop(obj) {
   return h;
 }
 function addListener(el, { value }) {
+  el.$value = value;
   function lazyload() {
-    el.$value = value;
     let seeHeight = document.documentElement.clientHeight; //可见区域高度
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离顶部高度
     if (getTop(el) < seeHeight + scrollTop) {
