@@ -7,12 +7,12 @@ function getTop(obj) {
   return h;
 }
 function addListener(el, { value }) {
+  el.$value = value;
   function lazyload() {
     let seeHeight = document.documentElement.clientHeight; //可见区域高度
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离顶部高度
-
     if (getTop(el) < seeHeight + scrollTop) {
-      value != undefined && (el.src = value)
+      el.$value != undefined && (el.src = el.$value)
     }
   }
   lazyload()
@@ -36,16 +36,8 @@ function addListener(el, { value }) {
       }
     };
   };
-  if (value.slice(value.length - 8) == '8282.gif') {
-    window.removeEventListener('scroll', throttle(lazyload, 500, 1000));
-    window.addEventListener('scroll', throttle(lazyload, 500, 1000));
-  } else {
-    window.removeEventListener('scroll', throttle(lazyload, 500, 1000));
-    el.src = value
-  }
-  // 采用了节流函数
-  
-
+  window.removeEventListener('scroll', throttle(lazyload, 500, 1000));
+  window.addEventListener('scroll', throttle(lazyload, 500, 1000));
 }
 const vlazyload = {
   /*
@@ -59,9 +51,9 @@ const vlazyload = {
   inserted(el, binding) {
     addListener(el, binding)
   },
-  update: function (el, binding) {
-    addListener(el, binding)
-  }
+  componentUpdated(el, { value }) {
+    el.$value = value;
+  },
 };
 
 export default vlazyload;
